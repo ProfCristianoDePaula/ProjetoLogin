@@ -1,4 +1,4 @@
-# 🧑‍🏫 Repositório de Aula - Projeto MVC com Entity Framework
+# 🧑‍🏫 Projeto MVC com Entity Framework
 
 Este projeto é um exemplo educacional de uma aplicação ASP.NET Core MVC utilizando Entity Framework Core para acesso a dados, Identity Framework para autenticação e autorização de usuários, e estilização com Bootstrap 5.3. O layout é totalmente responsivo com base no sistema de Grid do Bootstrap.
 
