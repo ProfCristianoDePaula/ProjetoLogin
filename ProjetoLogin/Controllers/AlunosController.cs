@@ -62,6 +62,8 @@ namespace ProjetoLogin.Controllers
             if (ModelState.IsValid)
             {
                 aluno.AlunoId = Guid.NewGuid();
+                aluno.DataCadastro = DateTime.Now;
+                aluno.CadastroAtivo = true;
                 _context.Add(aluno);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -157,5 +159,42 @@ namespace ProjetoLogin.Controllers
         {
             return _context.Alunos.Any(e => e.AlunoId == id);
         }
+
+        // Criar método para Ativar/Desativar Cadastro do Aluno
+        // POST: Alunos/ToggleStatus/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleStatus(Guid id)
+        {
+            var aluno = await _context.Alunos.FindAsync(id);
+            if (aluno == null)
+            {
+                return NotFound();
+            }
+
+            aluno.CadastroAtivo = !aluno.CadastroAtivo;
+            _context.Update(aluno);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // Incluir um método de busca
+        // GET: Alunos/Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return View("Index", await _context.Alunos.ToListAsync());
+            }
+
+            var alunos = await _context.Alunos
+                .Where(a => a.Nome.Contains(searchTerm) || a.Email.Contains(searchTerm))
+                .ToListAsync();
+
+            return View("Index", alunos);
+        }
+
     }
 }
