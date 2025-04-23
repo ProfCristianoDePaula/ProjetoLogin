@@ -57,13 +57,37 @@ namespace ProjetoLogin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlunoId,Nome,Email,Celular,CPF,DataNasc,RM,DataCadastro,CadastroAtivo,Endereco,Bairro,Cidade,UF,CEP,Numero,UrlFoto")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("AlunoId,Nome,Email,Celular,CPF,DataNasc,RM,DataCadastro,CadastroAtivo,Endereco,Bairro,Cidade,UF,CEP,Numero")] Aluno aluno, IFormFile UrlFoto)
         {
             if (ModelState.IsValid)
             {
                 aluno.AlunoId = Guid.NewGuid();
                 aluno.DataCadastro = DateTime.Now;
                 aluno.CadastroAtivo = true;
+                // Verificar se o arquivo foi enviado
+                if (UrlFoto != null && UrlFoto.Length > 0)
+                {
+                    // Definir o caminho para salvar a imagem
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Photos");
+                    var uniqueFileName = $"{Guid.NewGuid()}_{UrlFoto.FileName}";
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Criar a pasta se não existir
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Salvar o arquivo no diretório
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await UrlFoto.CopyToAsync(fileStream);
+                    }
+
+                    // Atualizar o campo UrlFoto com o caminho relativo
+                    aluno.UrlFoto = Path.Combine("Resources", "Photos", uniqueFileName).Replace("\\", "/");
+                }
+
                 _context.Add(aluno);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

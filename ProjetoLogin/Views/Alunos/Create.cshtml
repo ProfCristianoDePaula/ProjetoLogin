@@ -7,7 +7,7 @@
 <h2 class="display-6 text-center">Cadastro de Alunos</h2>
 <hr />
 
-<form asp-action="Create">
+<form asp-action="Create" enctype="multipart/form-data" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="row">
@@ -52,7 +52,7 @@
         <div class="col-12 col-lg-6">
             <div class="form-group">
                 <label asp-for="DataNasc" class="control-label"></label>
-                <input asp-for="DataNasc" class="form-control" />
+                <input type="date" asp-for="DataNasc" class="form-control" />
                 <span asp-validation-for="DataNasc" class="text-danger"></span>
             </div>
         </div>
@@ -125,7 +125,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label asp-for="UrlFoto" class="control-label"></label>
-                <input asp-for="UrlFoto" class="form-control" />
+                <input type="file" asp-for="UrlFoto" name="UrlFoto" class="form-control" accept="image/*" />
                 <span asp-validation-for="UrlFoto" class="text-danger"></span>
             </div>
         </div>

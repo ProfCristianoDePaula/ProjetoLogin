@@ -17,6 +17,6 @@
         public string UF { get; set; }
         public string CEP { get; set; }
         public string Numero { get; set; }
-        public string UrlFoto { get; set; }
+        public string? UrlFoto { get; set; }
     }
 }

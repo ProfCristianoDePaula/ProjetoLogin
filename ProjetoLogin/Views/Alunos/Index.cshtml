@@ -27,6 +27,9 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.UrlFoto)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Nome)
                 </th>
                 <th>
@@ -47,6 +50,9 @@
             {
                 <tr>
                     <td>
+                        <img src="@Url.Content(item.UrlFoto ?? "~/Resources/Photos/no-image.jpg")" alt="Foto do Aluno" class="img-thumbnail" style="width: 75px; height: 75px; object-fit: cover;" />
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Nome)
                     </td>
                     <td>
@@ -61,10 +67,10 @@
                     </td>
 
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.AlunoId" class="text-light text-decoration-none"><i class="bi bi-pen"></i> Editar</a> |
-                        <a asp-action="Delete" asp-route-id="@item.AlunoId" class="text-light text-decoration-none"><i class="bi bi-trash2"></i>Excluir</a> |
+                        <a asp-action="Edit" asp-route-id="@item.AlunoId" class="text-light text-decoration-none me-2"><i class="bi bi-pen"></i> Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AlunoId" class="text-light text-decoration-none mx-2"><i class="bi bi-trash2"></i> Excluir</a> |
                         <form asp-action="ToggleStatus" asp-route-id="@item.AlunoId" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-link text-light text-decoration-none">
+                            <button type="submit" class="btn btn-link text-light text-decoration-none m-0 p-0 border-0 ms-2">
                                 <i class="bi bi-toggle-on"></i> @(item.CadastroAtivo == true ? "Desativar" : "Ativar")
                             </button>
                         </form>
