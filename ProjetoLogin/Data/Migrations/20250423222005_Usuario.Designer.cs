@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoLogin.Data;
 
@@ -11,9 +12,11 @@ using ProjetoLogin.Data;
 namespace ProjetoLogin.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250423222005_Usuario")]
+    partial class Usuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,38 +50,6 @@ namespace ProjetoLogin.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "df66d997-8e6d-4758-abe9-4bd2bfe31c0d",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "fbe16643-7088-436e-8dd4-20112e9f5d12",
-                            Name = "Professor",
-                            NormalizedName = "PROFESSOR"
-                        },
-                        new
-                        {
-                            Id = "00bb3b24-e535-4216-99ea-1efd9333e650",
-                            Name = "Coordenador",
-                            NormalizedName = "COORDENADOR"
-                        },
-                        new
-                        {
-                            Id = "8d552d7b-0eda-44ae-b5ea-3d32a34a8656",
-                            Name = "Psicólogo",
-                            NormalizedName = "PSICÓLOGO"
-                        },
-                        new
-                        {
-                            Id = "ccd536b3-3289-40f8-a002-38f9557d1b60",
-                            Name = "Operador",
-                            NormalizedName = "OPERADOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -169,24 +140,6 @@ namespace ProjetoLogin.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "17fb5680-07d9-4bb9-9863-dc71415dceb3",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d21ffb34-0e1b-4307-a320-a35e0acd105a",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@ADMIN.COM",
-                            NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKbqQfhvsCFCy1FfERCv29sTlnIMW3Nl15GfzcnNigyVvK5ygKGLpCv7piVcZtW3fA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "67d6bae8-129e-4927-89d3-3cd82d519608",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -251,13 +204,6 @@ namespace ProjetoLogin.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "17fb5680-07d9-4bb9-9863-dc71415dceb3",
-                            RoleId = "df66d997-8e6d-4758-abe9-4bd2bfe31c0d"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
