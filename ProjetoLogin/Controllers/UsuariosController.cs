@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +55,7 @@ namespace ProjetoLogin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UsuarioId,NomeCompleto,DataCadastro,Ativo,AppUserId")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("UsuarioId,NomeCompleto,DataCadastro,Ativo,AppUserId,TipoUsuario")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -85,6 +86,14 @@ namespace ProjetoLogin.Controllers
                 _context.Add(usuario); // Adiciona o novo usuário ao contexto
                 await _context.SaveChangesAsync();
                 // Retorna para a pagina Home/Index
+
+                // Criar um registro no AspNetUsersRoles com o Tipo de Usuário
+                var role = new IdentityUserRole<string>
+                {
+                    UserId = usuario.AppUserId.ToString(),
+                    RoleId = _context.Roles.FirstOrDefault(r => r.Name == usuario.TipoUsuario).Id // Defina o ID do papel desejado aqui
+                };
+
                 return RedirectToAction("Index", "Home");
 
             }
@@ -112,7 +121,7 @@ namespace ProjetoLogin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UsuarioId,NomeCompleto,DataCadastro,Ativo,AppUserId")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("UsuarioId,NomeCompleto,DataCadastro,Ativo,AppUserId,TipoUsuario")] Usuario usuario)
         {
             if (id != usuario.UsuarioId)
             {

@@ -109,7 +109,7 @@ namespace ProjetoLogin.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            var urlCadastro = Url.Content("~/Usuarios/Create");
+            // var urlCadastro = Url.Content("~/Usuarios/Create");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -137,6 +137,7 @@ namespace ProjetoLogin.Areas.Identity.Pages.Account
                     // Se o usuário não completou o cadastro, redireciona para a página de cadastro
                     if (usuario == null)
                     {
+                        var urlCadastro = Url.Content("~/Usuarios/Create");
                         return LocalRedirect(urlCadastro);
                     }
 
